@@ -39,8 +39,9 @@ public class Kitura {
     /// - Parameter withSSL: The `sslConfig` to use.
     /// - Returns: The created `HTTPServer`.
     @discardableResult
-    public class func addHTTPServer(onPort port: Int, with delegate: ServerDelegate, withSSL sslConfig: SSLConfig?=nil) -> HTTPServer {
+    public class func addHTTPServer(onPort port: Int, with delegate: ServerDelegate, withSSL sslConfig: SSLConfig?=nil, socketFamily: ProtocolFamily = .inet4) -> HTTPServer {
         let server = HTTP.createServer()
+        server.socketFamily = socketFamily
         server.delegate = delegate
         server.sslConfig = sslConfig?.config
         httpServersAndPorts.append(server: server, port: port)
